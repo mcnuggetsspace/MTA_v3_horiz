@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Bus Pizza Board</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script src="assets/js/app.js" defer></script>
+</head>
+
+<body>
+  <main class="page">
+    <!-- Кнопка настроек (не повёрнута, удобно кликать на ноутбуке) -->
+    <button class="settings-button" id="open-settings" type="button">
+      ⚙ Settings
+    </button>
+
+    <!-- Повернутый вертикальный экран -->
+    <div class="rotate-wrapper">
+      <section class="bus-screen">
+        <!-- Верхние 25%: маршрут и времена -->
+        <header class="screen-top">
+          <div id="route-label" class="route-label">
+            <span class="route-icon"></span>
+            <span class="route-text"></span>
+          </div>
+          <div class="arrival-times" id="arrival-times"></div>
+        </header>
+
+        <!-- Средние ~65%: фото пиццы + название + цена -->
+        <div class="screen-middle">
+          <div class="pizza-wrapper">
+            <img class="pizza-image" id="pizza-image" src="" alt="Pizza" />
+            <div class="pizza-overlay">
+              <div class="pizza-title" id="pizza-title"></div>
+              <div class="pizza-price" id="pizza-price"></div>
+            </div>
+          </div>
+
+          <div class="dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+
+        <!-- Нижние 10%: QR + Order Online + время -->
+        <footer class="screen-bottom">
+          <div class="qr-box">
+            <!-- сюда можешь положить свой настоящий QR -->
+            <img src="assets/qr-placeholder.png" alt="QR code" class="qr-img" />
+          </div>
+
+          <div class="order-text">Order Online</div>
+
+          <div class="time-box" id="clock">03:12 AM</div>
+        </footer>
+      </section>
+    </div>
+  </main>
+
+  <!-- Оверлей настроек конфигурации -->
+  <div class="settings-overlay hidden" id="settings-overlay">
+    <div class="settings-panel">
+      <div class="settings-header">
+        <h2>Board settings</h2>
+        <button class="settings-close" id="close-settings" type="button">✕</button>
+      </div>
+
+      <form id="settings-form">
+        <label class="field">
+          <span>Cloudflare Worker URL</span>
+          <input
+            type="url"
+            id="workerUrl"
+            name="workerUrl"
+            placeholder="https://your-worker.yourname.workers.dev/siri"
+            required
+          />
+        </label>
+
+        <label class="field">
+          <span>MTA Stop ID</span>
+          <input
+            type="text"
+            id="stopId"
+            name="stopId"
+            placeholder="MTA_308209"
+            required
+          />
+        </label>
+
+        <label class="field">
+          <span>MTA Route (LineRef)</span>
+          <input
+            type="text"
+            id="routeId"
+            name="routeId"
+            placeholder="B82"
+            required
+          />
+        </label>
+
+        <label class="field">
+          <span>Refresh interval (seconds)</span>
+          <input
+            type="number"
+            id="refreshSeconds"
+            name="refreshSeconds"
+            min="5"
+            step="5"
+            required
+          />
+        </label>
+
+        <label class="field">
+          <span>How many arrivals to show</span>
+          <input
+            type="number"
+            id="maxArrivals"
+            name="maxArrivals"
+            min="1"
+            max="5"
+            required
+          />
+        </label>
+
+        <div class="settings-actions">
+          <button type="button" id="reset-settings" class="btn-secondary">
+            Reset to defaults
+          </button>
+          <button type="submit" class="btn-primary">
+            Save & apply
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
