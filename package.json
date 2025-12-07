@@ -1,0 +1,9 @@
+{
+  "name": "mta-selected-transport-web-app-with-ads",
+  "version": "1.0.0",
+  "description": "Static single-page app highlighting MTA NYC bus arrivals and rotating pizza menu ads for display deployments.",
+  "private": true,
+  "scripts": {
+    "build": "echo \"Static site: deploy assets from project root\""
+  }
+}
