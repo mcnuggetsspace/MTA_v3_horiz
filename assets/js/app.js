@@ -136,8 +136,8 @@ const pizzaSlides = [
     title: "",
     price: "",
     image:
-      "assets/pizza_image_1.jpeg",
-    duration: 4000,
+      "assets/output.gif",
+    duration: 7000,
   },
   {
     title: "FRESH OUT OF THE OVEN",
@@ -149,8 +149,8 @@ const pizzaSlides = [
     title: "",
     price: "",
     image:
-      "assets/pizza_image_2.jpeg",
-    duration: 4000,
+      "assets/output.webp",
+    duration: 7000,
   },
   {
     title: "",
