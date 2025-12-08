@@ -173,55 +173,139 @@ function initPizzaSlideshow() {
   const videoEl = document.getElementById("pizza-video");
   const titleEl = document.getElementById("pizza-title");
   const priceEl = document.getElementById("pizza-price");
-  const dots = document.querySelectorAll(".dot");
+  const dotsRoot = document.getElementById("pizza-dots");
 
-  if (!imgEl || !titleEl || !priceEl || dots.length === 0 || !videoEl) return;
+  if (!imgEl || !titleEl || !priceEl || !videoEl) return;
+  if (!pizzaSlides.length) return;
+
+  const dots = [];
+  if (dotsRoot) {
+    dotsRoot.innerHTML = "";
+    pizzaSlides.forEach(() => {
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      dotsRoot.appendChild(dot);
+      dots.push(dot);
+    });
+  } else {
+    document.querySelectorAll(".dot").forEach((dot) => dots.push(dot));
+  }
 
   let slideIndex = 0;
   let slideTimer = null;
+  let slideToken = 0;
+  let pendingVideoReadyHandler = null;
 
-  function setSlide(i) {
-    const slide = pizzaSlides[i];
-    const isVideo = Boolean(slide.video);
+  videoEl.muted = true;
+  videoEl.autoplay = true;
+  videoEl.playsInline = true;
 
-    if (isVideo) {
-      imgEl.classList.add("hidden");
-      videoEl.classList.remove("hidden");
-      videoEl.src = slide.video;
-      videoEl.load();
-      videoEl.play().catch(() => {});
-    } else {
-      videoEl.pause();
-      videoEl.currentTime = 0;
-      videoEl.classList.add("hidden");
-      imgEl.classList.remove("hidden");
-      imgEl.src = slide.image;
-      imgEl.alt = slide.title;
+  function cleanupVideoReadyHandler() {
+    if (pendingVideoReadyHandler) {
+      videoEl.removeEventListener("loadeddata", pendingVideoReadyHandler);
+      pendingVideoReadyHandler = null;
     }
-    titleEl.textContent = slide.title;
-    priceEl.textContent = slide.price;
+  }
 
+  function updateDots(activeIndex) {
     dots.forEach((dot, dotIndex) => {
-      dot.classList.toggle("active", dotIndex === i);
+      dot.classList.toggle("active", dotIndex === activeIndex);
     });
   }
 
-  function queueNextSlide() {
+  function scheduleNextSlide(customDelay) {
     const current = pizzaSlides[slideIndex];
-    const delay = Math.max(1000, current.duration || 4000);
-    if (slideTimer) {
-      clearTimeout(slideTimer);
-    }
-
+    const delay = Math.max(1000, customDelay ?? current.duration ?? 4000);
+    clearTimeout(slideTimer);
     slideTimer = setTimeout(() => {
       slideIndex = (slideIndex + 1) % pizzaSlides.length;
-      setSlide(slideIndex);
-      queueNextSlide();
+      renderSlide(slideIndex);
+      scheduleNextSlide();
     }, delay);
   }
 
-  setSlide(slideIndex);
-  queueNextSlide();
+  function skipToNextSlide() {
+    clearTimeout(slideTimer);
+    slideIndex = (slideIndex + 1) % pizzaSlides.length;
+    renderSlide(slideIndex);
+    scheduleNextSlide();
+  }
+
+  function showImage(slide) {
+    cleanupVideoReadyHandler();
+    videoEl.pause();
+    videoEl.currentTime = 0;
+    videoEl.classList.add("hidden");
+    imgEl.classList.remove("hidden");
+    if (slide.image) {
+      imgEl.src = slide.image;
+      imgEl.alt = slide.title || "Pizza";
+    }
+  }
+
+  function showVideo(slide, token) {
+    imgEl.classList.add("hidden");
+    videoEl.classList.remove("hidden");
+
+    cleanupVideoReadyHandler();
+    videoEl.pause();
+    videoEl.currentTime = 0;
+
+    const nextSrc = new URL(slide.video, window.location.href).toString();
+    if (!videoEl.src || videoEl.src !== nextSrc) {
+      videoEl.src = slide.video;
+    }
+    videoEl.load(); // Safari needs fresh load for subsequent loops
+
+    const startPlayback = () => {
+      if (token !== slideToken) return;
+      const promise = videoEl.play();
+      if (promise && typeof promise.then === "function") {
+        promise.catch((err) => {
+          console.warn("Pizza video autoplay failed", err);
+          if (token === slideToken) {
+            skipToNextSlide();
+          }
+        });
+      }
+    };
+
+    if (videoEl.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      startPlayback();
+      return;
+    }
+
+    const readyHandler = () => {
+      pendingVideoReadyHandler = null;
+      startPlayback();
+    };
+
+    pendingVideoReadyHandler = readyHandler;
+    videoEl.addEventListener("loadeddata", readyHandler, { once: true });
+  }
+
+  function renderSlide(index) {
+    slideToken += 1;
+    const token = slideToken;
+    const slide = pizzaSlides[index];
+    const isVideo = Boolean(slide.video);
+
+    titleEl.textContent = slide.title;
+    priceEl.textContent = slide.price;
+
+    if (dots.length) {
+      updateDots(index);
+    }
+
+    if (isVideo) {
+      showVideo(slide, token);
+    } else {
+      showImage(slide);
+    }
+  }
+
+  renderSlide(slideIndex);
+  scheduleNextSlide();
 }
 
 function initOrderTextCycle() {

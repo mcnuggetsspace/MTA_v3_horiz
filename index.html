@@ -20,18 +20,21 @@
         <div class="media-visual">
           <div class="pizza-wrapper">
             <img class="pizza-image" id="pizza-image" src="" alt="Pizza" />
-            <video class="pizza-video hidden" id="pizza-video" playsinline muted loop></video>
+            <video
+              class="pizza-video hidden"
+              id="pizza-video"
+              playsinline
+              autoplay
+              muted
+              loop
+              preload="auto"
+            ></video>
             <div class="pizza-overlay">
               <div class="pizza-title" id="pizza-title"></div>
               <div class="pizza-price" id="pizza-price"></div>
             </div>
           </div>
-          <div class="dots">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </div>
+          <div class="dots" id="pizza-dots"></div>
         </div>
         <footer class="promo-bar">
           <div class="order-text" id="order-text">You've got time</div>
