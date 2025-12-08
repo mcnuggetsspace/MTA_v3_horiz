@@ -106,23 +106,21 @@ function renderBusHeader() {
   const times = screenConfig.times.slice(0, getDisplayArrivalsCount());
 
   times.forEach((t, i) => {
-    const span = document.createElement("span");
-    span.className = "time" + (i === 0 ? " primary" : "");
-    span.textContent = formatArrival(t);
-    timesRoot.appendChild(span);
+    const row = document.createElement("div");
+    row.className = "arrival-time-row" + (i === 0 ? " primary" : "");
 
-    if (i < times.length - 1) {
-      const slash = document.createElement("span");
-      slash.className = "slash";
-      slash.textContent = "/";
-      timesRoot.appendChild(slash);
-    }
+    const value = document.createElement("span");
+    value.className = "time";
+    value.textContent = formatArrival(t);
+
+    const label = document.createElement("span");
+    label.className = "min-label";
+    label.textContent = "min";
+
+    row.appendChild(value);
+    row.appendChild(label);
+    timesRoot.appendChild(row);
   });
-
-  const min = document.createElement("span");
-  min.className = "min-label";
-  min.textContent = "min";
-  timesRoot.appendChild(min);
 }
 
 // ===== Пицца-слайдер (как было) =====

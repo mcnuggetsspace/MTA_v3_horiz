@@ -11,30 +11,16 @@
 
 <body>
   <main class="page">
-    <!-- Кнопка настроек (не повёрнута, удобно кликать на ноутбуке) -->
     <button class="settings-button" id="open-settings" type="button">
       ⚙ Settings
     </button>
 
-    <!-- Повернутый вертикальный экран -->
-    <div class="rotate-wrapper">
-      <section class="bus-screen">
-        <!-- Верхние 25%: маршрут и времена -->
-        <header class="screen-top">
-          <div class="top-clock-row">
-            <div class="time-box" id="clock">03:12 AM</div>
-          </div>
-          <div class="top-info-row">
-            <div id="route-label" class="route-label">
-              <span class="route-icon"></span>
-              <span class="route-text"></span>
-            </div>
-            <div class="arrival-times" id="arrival-times"></div>
-          </div>
-        </header>
-
-        <!-- Средние ~65%: фото пиццы + название + цена -->
-        <div class="screen-middle">
+    <section class="bus-screen">
+      <div class="media-panel">
+        <div class="clock-container">
+          <div class="time-box" id="clock">03:12 AM</div>
+        </div>
+        <div class="media-visual">
           <div class="pizza-wrapper">
             <img class="pizza-image" id="pizza-image" src="" alt="Pizza" />
             <video class="pizza-video hidden" id="pizza-video" playsinline muted loop></video>
@@ -43,7 +29,6 @@
               <div class="pizza-price" id="pizza-price"></div>
             </div>
           </div>
-
           <div class="dots">
             <span class="dot"></span>
             <span class="dot"></span>
@@ -51,13 +36,19 @@
             <span class="dot"></span>
           </div>
         </div>
-
-        <!-- Нижние 10%: QR + Order Online + время -->
-        <footer class="screen-bottom">
+        <footer class="promo-bar">
           <div class="order-text" id="order-text">You've got time</div>
         </footer>
-      </section>
-    </div>
+      </div>
+
+      <aside class="info-panel">
+        <div class="route-label">
+          <span class="route-icon"></span>
+          <span class="route-text"></span>
+        </div>
+        <div class="arrival-times" id="arrival-times"></div>
+      </aside>
+    </section>
   </main>
 
   <!-- Оверлей настроек конфигурации -->
