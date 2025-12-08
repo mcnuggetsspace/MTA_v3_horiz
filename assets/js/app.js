@@ -142,28 +142,28 @@ const pizzaSlides = [
   {
     title: "FRESH OUT OF THE OVEN",
     price: "$19.00",
-    video: "assets/pizza_vertical_video.mp4",
+    video: "assets/pizza_horizontal_video.mp4",
     duration: 7000,
   },
   {
     title: "",
     price: "",
     image:
-      "assets/pizza_image_2.jpg",
+      "assets/pizza_image_2.jpeg",
     duration: 4000,
   },
   {
     title: "",
     price: "",
     image:
-      "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?auto=format&fit=crop&w=800&q=80",
+      "assets/pizza_image_3.jpeg",
     duration: 4000,
   },
   {
     title: "",
     price: "",
     image:
-      "https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=800&q=80",
+      "assets/pizza_image_4.jpeg",
     duration: 4000,
   },
 ];
