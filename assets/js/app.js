@@ -155,8 +155,8 @@ const pizzaSlides = [
     title: "",
     price: "",
     image:
-      "assets/pizza_image_2.jpeg",
-    duration: 4000,
+      "assets/pizza_vertical_video.mp4",
+    duration: 7000,
   },
   {
     title: "",
