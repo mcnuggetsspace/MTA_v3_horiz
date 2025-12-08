@@ -73,9 +73,10 @@ body {
 }
 
 .clock-container {
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 16px;
+  justify-content: center;
+  margin-bottom: 6px;
 }
 
 .media-visual {
@@ -102,8 +103,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 20px 14px;
+  gap: 16px;
 }
 
 .route-label {
