@@ -146,6 +146,12 @@ const pizzaSlides = [
     duration: 8000,
   },
   {
+    title: "FRESH OUT OF THE OVEN",
+    price: "$29.00",
+    video: "assets/pizza_horizontal_video.mp4",
+    duration: 8000,
+  },
+  {
     title: "",
     price: "",
     image:
