@@ -8,7 +8,7 @@ function getInitialBusLabel() {
 }
 
 const defaultConfig = {
-  workerUrl: "https://mta-selected-transport-web-app-with-ads-v3.pages.dev/api/stop-monitoring",
+  workerUrl: "https://mta-selected-transport-web-app-with-ads-v4.pages.dev/api/stop-monitoring",
   stopId: "300432",                  // можно так или MTA_300432
   refreshSeconds: 30,
   maxArrivals: 3,
@@ -57,6 +57,9 @@ const LINE_ROTATION_INTERVAL_MS = 10_000;
 // сколько минимум записей запрашиваем на маршрут, даже если показываем меньше
 const MIN_FETCH_ARRIVALS_PER_LINE = 5;
 const MAX_FETCH_VISITS = 15;
+const MAX_MINUTES_AHEAD = 100;
+const ORDER_TEXTS = ["You've got time", "Hot pizza & rolls", "Fresh oven vibes"];
+const ORDER_TEXT_INTERVAL_MS = 5000;
 let lineRotationTimer = null;
 
 // интервал обновления данных с MTA
@@ -126,45 +129,71 @@ function renderBusHeader() {
 
 const pizzaSlides = [
   {
-    title: "QUATTRO FORMAGGI",
-    price: "$16.99",
+    title: "",
+    price: "",
     image:
-      "https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=800&q=80",
+      "assets/pizza_image_1.jpeg",
+    duration: 4000,
   },
   {
-    title: "DIAVOLA",
-    price: "$15.99",
+    title: "FRESH OUT OF THE OVEN",
+    price: "$19.00",
+    video: "assets/pizza_vertical_video.mp4",
+    duration: 7000,
+  },
+  {
+    title: "",
+    price: "",
+    image:
+      "assets/pizza_image_2.jpg",
+    duration: 4000,
+  },
+  {
+    title: "",
+    price: "",
     image:
       "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?auto=format&fit=crop&w=800&q=80",
+    duration: 4000,
   },
   {
-    title: "PEPPERONI",
-    price: "$14.99",
-    image:
-      "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    title: "PROSCIUTTO",
-    price: "$17.99",
+    title: "",
+    price: "",
     image:
       "https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=800&q=80",
+    duration: 4000,
   },
 ];
 
 function initPizzaSlideshow() {
   const imgEl = document.getElementById("pizza-image");
+  const videoEl = document.getElementById("pizza-video");
   const titleEl = document.getElementById("pizza-title");
   const priceEl = document.getElementById("pizza-price");
   const dots = document.querySelectorAll(".dot");
 
-  if (!imgEl || !titleEl || !priceEl || dots.length === 0) return;
+  if (!imgEl || !titleEl || !priceEl || dots.length === 0 || !videoEl) return;
 
   let slideIndex = 0;
+  let slideTimer = null;
 
   function setSlide(i) {
     const slide = pizzaSlides[i];
-    imgEl.src = slide.image;
-    imgEl.alt = slide.title;
+    const isVideo = Boolean(slide.video);
+
+    if (isVideo) {
+      imgEl.classList.add("hidden");
+      videoEl.classList.remove("hidden");
+      videoEl.src = slide.video;
+      videoEl.load();
+      videoEl.play().catch(() => {});
+    } else {
+      videoEl.pause();
+      videoEl.currentTime = 0;
+      videoEl.classList.add("hidden");
+      imgEl.classList.remove("hidden");
+      imgEl.src = slide.image;
+      imgEl.alt = slide.title;
+    }
     titleEl.textContent = slide.title;
     priceEl.textContent = slide.price;
 
@@ -173,12 +202,35 @@ function initPizzaSlideshow() {
     });
   }
 
+  function queueNextSlide() {
+    const current = pizzaSlides[slideIndex];
+    const delay = Math.max(1000, current.duration || 4000);
+    if (slideTimer) {
+      clearTimeout(slideTimer);
+    }
+
+    slideTimer = setTimeout(() => {
+      slideIndex = (slideIndex + 1) % pizzaSlides.length;
+      setSlide(slideIndex);
+      queueNextSlide();
+    }, delay);
+  }
+
   setSlide(slideIndex);
+  queueNextSlide();
+}
+
+function initOrderTextCycle() {
+  const orderEl = document.getElementById("order-text");
+  if (!orderEl || ORDER_TEXTS.length === 0) return;
+
+  let index = 0;
+  orderEl.textContent = ORDER_TEXTS[index];
 
   setInterval(() => {
-    slideIndex = (slideIndex + 1) % pizzaSlides.length;
-    setSlide(slideIndex);
-  }, 4000);
+    index = (index + 1) % ORDER_TEXTS.length;
+    orderEl.textContent = ORDER_TEXTS[index];
+  }, ORDER_TEXT_INTERVAL_MS);
 }
 
 // ===== Часы =====
@@ -245,7 +297,7 @@ function extractArrivalsByLine(json) {
       if (Number.isNaN(ts)) return;
 
       const diffMin = Math.round((ts - now) / 60000);
-      if (diffMin < 0) return; // уже уехал
+      if (diffMin < 0 || diffMin > MAX_MINUTES_AHEAD) return; // вне окна отображения
 
       if (!result.has(lineName)) {
         result.set(lineName, []);
@@ -463,6 +515,7 @@ function init() {
   renderBusHeader();
   initPizzaSlideshow();
   initClock();
+  initOrderTextCycle();
   initSettingsUI();
   fetchAndUpdateArrivals();
   scheduleRefresh();

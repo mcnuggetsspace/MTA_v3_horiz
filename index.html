@@ -21,17 +21,23 @@
       <section class="bus-screen">
         <!-- Верхние 25%: маршрут и времена -->
         <header class="screen-top">
-          <div id="route-label" class="route-label">
-            <span class="route-icon"></span>
-            <span class="route-text"></span>
+          <div class="top-clock-row">
+            <div class="time-box" id="clock">03:12 AM</div>
           </div>
-          <div class="arrival-times" id="arrival-times"></div>
+          <div class="top-info-row">
+            <div id="route-label" class="route-label">
+              <span class="route-icon"></span>
+              <span class="route-text"></span>
+            </div>
+            <div class="arrival-times" id="arrival-times"></div>
+          </div>
         </header>
 
         <!-- Средние ~65%: фото пиццы + название + цена -->
         <div class="screen-middle">
           <div class="pizza-wrapper">
             <img class="pizza-image" id="pizza-image" src="" alt="Pizza" />
+            <video class="pizza-video hidden" id="pizza-video" playsinline muted loop></video>
             <div class="pizza-overlay">
               <div class="pizza-title" id="pizza-title"></div>
               <div class="pizza-price" id="pizza-price"></div>
@@ -48,14 +54,7 @@
 
         <!-- Нижние 10%: QR + Order Online + время -->
         <footer class="screen-bottom">
-          <div class="qr-box">
-            <!-- сюда можешь положить свой настоящий QR -->
-            <img src="assets/qr-placeholder.png" alt="QR code" class="qr-img" />
-          </div>
-
-          <div class="order-text">Order Online</div>
-
-          <div class="time-box" id="clock">03:12 AM</div>
+          <div class="order-text" id="order-text">You've got time</div>
         </footer>
       </section>
     </div>
@@ -76,7 +75,7 @@
             type="url"
             id="workerUrl"
             name="workerUrl"
-            placeholder="https://your-worker.yourname.workers.dev/siri"
+            placeholder="https://mta-selected-transport-web-app-with-ads-v4.pages.dev/api/stop-monitoring"
             required
           />
         </label>
@@ -88,17 +87,6 @@
             id="stopId"
             name="stopId"
             placeholder="MTA_308209"
-            required
-          />
-        </label>
-
-        <label class="field">
-          <span>MTA Route (LineRef)</span>
-          <input
-            type="text"
-            id="routeId"
-            name="routeId"
-            placeholder="B82"
             required
           />
         </label>

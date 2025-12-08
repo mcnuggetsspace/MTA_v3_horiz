@@ -77,32 +77,44 @@ body {
 /* Верхние 25% */
 
 .screen-top {
-  flex: 0 0 25%;
-  padding: 16px 22px;
+  flex: 0 0 15%;
+  padding: 6px 10px 10px;
   background: radial-gradient(circle at top left, #1f3440, #05070b 60%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.25);
+}
+
+.top-clock-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.top-info-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(0, 255, 255, 0.25);
+  gap: 12px;
 }
 
 .route-label {
   background: #ffffff;
   color: #000000;
-  padding: 10px 18px;
+  padding: 8px 8px;
   border-radius: 14px;
   font-weight: 900;
-  font-size: 32px;
-  letter-spacing: 0.12em;
+  font-size: 56px;
+  letter-spacing: 0.0em;
   display: flex;
   align-items: center;
-  gap: 10px; /* расстояние между иконкой и текстом */
+  gap: 8px; /* расстояние между иконкой и текстом */
 }
 
 /* сама иконка автобуса */
 .route-icon {
-  width: 28px;
-  height: 28px;
+  width: 50px;
+  height: 50px;
   display: inline-block;
   background-size: contain;
   background-repeat: no-repeat;
@@ -124,37 +136,39 @@ body {
 }
 
 .arrival-times .time {
-  font-weight: 700;
-  font-size: 32px; /* единый размер для всех минут */
+  font-weight: 600;
+  font-size: 48px; /* единый размер для всех минут */
 }
 
 .arrival-times .time.primary {
-  font-weight: 800;  /* можно оставить более жирным */
-  font-size: 32px;   /* тот же размер, чтобы не прыгала высота */
+  font-weight: 600;  /* можно оставить более жирным */
+  font-size: 48px;   /* тот же размер, чтобы не прыгала высота */
 }
 
 .arrival-times .slash {
-  opacity: 0.6;
-  font-size: 20px;
+  opacity: 0.8;
+  font-size: 40px;
 }
 
 .arrival-times .min-label {
   margin-left: 4px;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 32px;
   opacity: 0.9;
 }
 
 /* Средние ~65% */
 
 .screen-middle {
-  flex: 0 0 65%;
+  flex: 0 0 75%;
   position: relative;
   background: radial-gradient(circle at top, #222222, #020202 60%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 14px 14px 18px;
+  padding: 14px 12px 18px;
 }
+
 
 .pizza-wrapper {
   position: relative;
@@ -165,12 +179,24 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.pizza-image {
+.pizza-image,
+.pizza-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   transform: scale(1.02);
+}
+
+.pizza-video {
+  background: #000;
+}
+
+.pizza-video.hidden,
+.pizza-image.hidden {
+  display: none;
 }
 
 .pizza-overlay {
@@ -225,35 +251,20 @@ body {
   flex: 0 0 10%;
   display: flex;
   align-items: center;
-  padding: 10px 16px 12px;
-  gap: 10px;
+  justify-content: center;
+  padding: 1px 16px 32px 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: radial-gradient(circle at bottom, #050608, #000000);
-  font-size: 16px;
+  font-size: 48px;
 }
-
-.qr-box {
-  width: 46px;
-  height: 46px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.qr-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .order-text {
   flex: 1;
   text-align: center;
   font-weight: 500;
   letter-spacing: 0.16em;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 10px rgba(176, 141, 14, 0.754);
 }
 
 .time-box {
