@@ -35,9 +35,9 @@ body {
 
 .settings-button {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 20;
+  top: -80px;
+  left: -80px;
+  z-index: 5;
   padding: 6px 10px 6px 8px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -146,7 +146,7 @@ body {
   gap: 8px;
   color: #f8fafc;
   font-feature-settings: "tnum" 1, "lnum" 1;
-  padding-top: 16px;
+  padding-top: 0px;
   flex: 1;
 }
 
