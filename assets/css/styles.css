@@ -53,8 +53,8 @@ body {
 /* Горизонтальный экран */
 
 .bus-screen {
-  width: min(1400px, 95vw);
-  height: min(850px, 92vh);
+  width: 100%;
+  height: 100%;
   display: flex;
   background: #020608;
   border-radius: 28px;
