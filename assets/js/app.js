@@ -42,9 +42,11 @@ let config = loadConfig();
 // ===== Состояние для вывода на экран =====
 
 // то, что реально рисуем сейчас
+const DEFAULT_TIME_PLACEHOLDERS = ["-", "-", "-"];
+
 const screenConfig = {
   bus: getInitialBusLabel(),
-  times: [4, 7, 22],
+  times: [...DEFAULT_TIME_PLACEHOLDERS],
 };
 
 // сюда будем класть все маршруты на остановке
@@ -354,13 +356,17 @@ function updateLinesFromFetch(byLineMap) {
 }
 
 function renderCurrentLine() {
-  if (!lineRotationOrder.length) return;
+  if (!lineRotationOrder.length) {
+    screenConfig.times = [...DEFAULT_TIME_PLACEHOLDERS];
+    renderBusHeader();
+    return;
+  }
 
   const line = lineRotationOrder[currentLineIndex];
   const minutes = arrivalsByLine[line] || [];
 
   screenConfig.bus = line;
-  screenConfig.times = minutes.length ? minutes : [4, 7, 22]; // fallback
+  screenConfig.times = minutes.length ? minutes : [...DEFAULT_TIME_PLACEHOLDERS];
   renderBusHeader();
 }
 
