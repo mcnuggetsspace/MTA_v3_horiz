@@ -81,7 +81,8 @@ function formatTime(date) {
 // ===== Рендер верхней части (маршрут + времена) =====
 
 function getDisplayArrivalsCount() {
-  return Math.max(1, config.maxArrivals || defaultConfig.maxArrivals);
+  const requested = Math.max(1, config.maxArrivals || defaultConfig.maxArrivals);
+  return Math.min(3, requested);
 }
 
 function getFetchArrivalsCount() {
@@ -105,9 +106,12 @@ function renderBusHeader() {
 
   timesRoot.innerHTML = "";
 
-  const times = screenConfig.times.slice(0, getDisplayArrivalsCount());
+  const padded = [...screenConfig.times];
+  while (padded.length < getDisplayArrivalsCount()) {
+    padded.push("-");
+  }
 
-  times.forEach((t, i) => {
+  padded.slice(0, getDisplayArrivalsCount()).forEach((t, i) => {
     const row = document.createElement("div");
     row.className = "arrival-time-row" + (i === 0 ? " primary" : "");
 

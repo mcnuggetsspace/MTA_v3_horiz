@@ -102,24 +102,24 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 28px;
-  padding: 32px 20px;
+  justify-content: space-between;
+  padding: 20px 14px;
 }
 
 .route-label {
   background: #ffffff;
   color: #000000;
-  padding: 16px 20px;
+  padding: 12px 16px;
   border-radius: 18px;
   font-weight: 900;
-  font-size: 54px;
+  font-size: 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .route-text {
@@ -128,8 +128,8 @@ body {
 
 /* сама иконка автобуса */
 .route-icon {
-  width: 70px;
-  height: 70px;
+  width: 56px;
+  height: 56px;
   display: inline-block;
   background-size: contain;
   background-repeat: no-repeat;
@@ -141,19 +141,24 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   color: #f8fafc;
   font-feature-settings: "tnum" 1, "lnum" 1;
+  padding-top: 16px;
+  flex: 1;
 }
 
 .arrival-time-row {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  padding: 12px 8px;
+  padding: 10px 6px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.05);
+  flex: 1;
+  min-height: 0;
 }
 
 .arrival-time-row.primary {
@@ -162,12 +167,12 @@ body {
 
 .arrival-time-row .time {
   font-weight: 700;
-  font-size: 48px;
+  font-size: 40px;
 }
 
 .arrival-time-row .min-label {
   font-weight: 400;
-  font-size: 22px;
+  font-size: 18px;
   opacity: 0.85;
 }
 
