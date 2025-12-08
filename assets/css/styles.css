@@ -1,0 +1,368 @@
+/* Базовые настройки — без скроллов */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* ни вертикального, ни горизонтального скролла */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #101010;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
+    sans-serif;
+}
+
+.page {
+  position: relative;
+}
+
+/* Кнопка настроек (снаружи, не повёрнута) */
+
+.settings-button {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 20;
+  padding: 6px 10px 6px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.6);
+  color: #f9fafb;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* Контейнер, который поворачивает контент */
+
+.rotate-wrapper {
+  width: 540px;
+  height: 960px;
+  overflow: hidden;
+  position: relative;
+  transform: rotate(90deg);
+  transform-origin: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Сам экран 540x960, фиксированный размер */
+
+.bus-screen {
+  width: 540px;
+  height: 960px;
+  background: #000000;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Верхние 25% */
+
+.screen-top {
+  flex: 0 0 25%;
+  padding: 16px 22px;
+  background: radial-gradient(circle at top left, #1f3440, #05070b 60%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.25);
+}
+
+.route-label {
+  background: #ffffff;
+  color: #000000;
+  padding: 10px 18px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 32px;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* расстояние между иконкой и текстом */
+}
+
+/* сама иконка автобуса */
+.route-icon {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* SVG-иконка автобуса в data URI */
+  background-image: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3C!--License%3A%20PD.%20Made%20by%20IonutNeagu%3A%20https%3A%2F%2Fgithub.com%2FIonutNeagu--%3E%3Csvg%20fill%3D%22%23000000%22%20width%3D%2250px%22%20height%3D%2250px%22%20viewBox%3D%220%200%2050%2050%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%3Cpath%20d%3D%22M12%200C8.90625%200%206.644531%200.398438%205.09375%201.75C3.542969%203.101563%203%205.230469%203%208L3%2012L2%2012C0.90625%2012%200%2012.90625%200%2014L0%2022C0%2023.09375%200.90625%2024%202%2024L3%2024L3%2041C3%2042.222656%203.382813%2043.25%204%2044.03125L4%2047C4%2048.644531%205.355469%2050%207%2050L11%2050C12.644531%2050%2014%2048.644531%2014%2047L14%2046L36%2046L36%2047C36%2048.644531%2037.355469%2050%2039%2050L43%2050C44.644531%2050%2046%2048.644531%2046%2047L46%2044.03125C46.617188%2043.25%2047%2042.222656%2047%2041L47%2024L48%2024C49.09375%2024%2050%2023.09375%2050%2022L50%2014C50%2012.90625%2049.09375%2012%2048%2012L47%2012L47%209C47%206.355469%2046.789063%204.191406%2045.71875%202.53125C44.648438%200.871094%2042.6875%200%2040%200%20Z%20M%2012%202L40%202C42.3125%202%2043.351563%202.542969%2044.03125%203.59375C44.710938%204.644531%2045%206.484375%2045%209L45%2041C45%2042.386719%2044.601563%2042.933594%2043.78125%2043.375C42.960938%2043.816406%2041.585938%2044%2040%2044L10%2044C8.414063%2044%207.039063%2043.816406%206.21875%2043.375C5.398438%2042.933594%205%2042.386719%205%2041L5%208C5%205.484375%205.457031%204.109375%206.40625%203.28125C7.355469%202.453125%209.09375%202%2012%202%20Z%20M%2015%203C13.90625%203%2013%203.90625%2013%205L13%207C13%208.09375%2013.90625%209%2015%209L36%209C37.09375%209%2038%208.09375%2038%207L38%205C38%203.90625%2037.09375%203%2036%203%20Z%20M%2015%205L36%205L36%207L15%207%20Z%20M%2011%2010C9.832031%2010%208.765625%2010.296875%208.03125%2011.03125C7.296875%2011.765625%207%2012.832031%207%2014L7%2026C7%2027.167969%207.296875%2028.234375%208.03125%2028.96875C8.765625%2029.703125%209.832031%2030%2011%2030L39%2029.9375C39.816406%2029.9375%2040.695313%2029.625%2041.5%2029C42.304688%2028.375%2043%2027.324219%2043%2026L43%2014C43%2012.832031%2042.703125%2011.765625%2041.96875%2011.03125C41.234375%2010.296875%2040.167969%2010%2039%2010%20Z%20M%2011%2012L39%2012C39.832031%2012%2040.265625%2012.203125%2040.53125%2012.46875C40.796875%2012.734375%2041%2013.167969%2041%2014L41%2026C41%2026.675781%2040.714844%2027.070313%2040.28125%2027.40625C39.847656%2027.742188%2039.230469%2027.9375%2039%2027.9375L11%2028C10.167969%2028%209.734375%2027.796875%209.46875%2027.53125C9.203125%2027.265625%209%2026.832031%209%2026L9%2014C9%2013.167969%209.203125%2012.734375%209.46875%2012.46875C9.734375%2012.203125%2010.167969%2012%2011%2012%20Z%20M%202%2014L3%2014L3%2022L2%2022%20Z%20M%2047%2014L48%2014L48%2022L47%2022%20Z%20M%2011.5%2033C9.027344%2033%207%2035.027344%207%2037.5C7%2039.972656%209.027344%2042%2011.5%2042C13.972656%2042%2016%2039.972656%2016%2037.5C16%2035.027344%2013.972656%2033%2011.5%2033%20Z%20M%2038.5%2033C36.027344%2033%2034%2035.027344%2034%2037.5C34%2039.972656%2036.027344%2042%2038.5%2042C40.972656%2042%2043%2039.972656%2043%2037.5C43%2035.027344%2040.972656%2033%2038.5%2033%20Z%20M%2011.5%2035C12.890625%2035%2014%2036.109375%2014%2037.5C14%2038.890625%2012.890625%2040%2011.5%2040C10.109375%2040%209%2038.890625%209%2037.5C9%2036.109375%2010.109375%2035%2011.5%2035%20Z%20M%2038.5%2035C39.890625%2035%2041%2036.109375%2041%2037.5C41%2038.890625%2039.890625%2040%2038.5%2040C37.109375%2040%2036%2038.890625%2036%2037.5C36%2036.109375%2037.109375%2035%2038.5%2035%20Z%20M%206%2045.4375C7.199219%2045.890625%208.566406%2046%2010%2046L12%2046L12%2047C12%2047.5625%2011.5625%2048%2011%2048L7%2048C6.4375%2048%206%2047.5625%206%2047%20Z%20M%2044%2045.4375L44%2047C44%2047.5625%2043.5625%2048%2043%2048L39%2048C38.4375%2048%2038%2047.5625%2038%2047L38%2046L40%2046C41.433594%2046%2042.800781%2045.890625%2044%2045.4375Z%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.route-text {
+  line-height: 1;
+}
+
+.arrival-times {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: #f8fafc;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.arrival-times .time {
+  font-weight: 700;
+  font-size: 32px; /* единый размер для всех минут */
+}
+
+.arrival-times .time.primary {
+  font-weight: 800;  /* можно оставить более жирным */
+  font-size: 32px;   /* тот же размер, чтобы не прыгала высота */
+}
+
+.arrival-times .slash {
+  opacity: 0.6;
+  font-size: 20px;
+}
+
+.arrival-times .min-label {
+  margin-left: 4px;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* Средние ~65% */
+
+.screen-middle {
+  flex: 0 0 65%;
+  position: relative;
+  background: radial-gradient(circle at top, #222222, #020202 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px 14px 18px;
+}
+
+.pizza-wrapper {
+  position: relative;
+  flex: 1;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pizza-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+}
+
+.pizza-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 24px 18px;
+  text-align: center;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.3),
+    transparent
+  );
+}
+
+.pizza-title {
+  font-size: 22px;
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+
+.pizza-price {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.dot.active {
+  width: 14px;
+  background: #ffffff;
+}
+
+/* Нижние 10% */
+
+.screen-bottom {
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px 12px;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle at bottom, #050608, #000000);
+  font-size: 16px;
+}
+
+.qr-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.order-text {
+  flex: 1;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+
+.time-box {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* === Оверлей настроек === */
+
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.settings-overlay.hidden {
+  display: none;
+}
+
+.settings-panel {
+  width: 360px;
+  max-width: 90vw;
+  border-radius: 16px;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.9);
+  padding: 16px 18px 18px;
+  color: #e5e7eb;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.settings-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.settings-close {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.field span {
+  color: #9ca3af;
+}
+
+.field input {
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+.field input:focus {
+  outline: 1px solid #22d3ee;
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn-primary,
+.btn-secondary {
+  flex: 1;
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-primary {
+  background: #0ea5e9;
+  color: #0b1120;
+  border-color: #0ea5e9;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #e5e7eb;
+  border-color: rgba(148, 163, 184, 0.8);
+}
