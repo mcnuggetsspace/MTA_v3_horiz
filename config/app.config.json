@@ -1,0 +1,6 @@
+{
+  "busStopCode": "300432",
+  "refreshIntervalSeconds": 30,
+  "maxStopVisits": 10,
+  "showDebugInfo": false
+}
